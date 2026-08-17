@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>PG Complaint Management System</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- ================= HEADER ================= -->
+
+    <header class="header">
+
+        <div class="logo">
+            <span>🏠</span>
+            <div>
+                <h1>PG Care</h1>
+                <p>Complaint Management System</p>
+            </div>
+        </div>
+
+        <nav>
+            <a href="#home">Home</a>
+            <a href="#complaints">Complaints</a>
+            <a href="#addComplaint">Add Complaint</a>
+        </nav>
+
+    </header>
+
+
+    <!-- ================= MAIN ================= -->
+
+    <main>
+
+        <!-- ================= HERO ================= -->
+
+        <section id="home" class="hero">
+
+            <div class="hero-content">
+
+                <h2>PG Complaint Management System</h2>
+
+                <p>
+                    Report your PG or apartment issues and
+                    easily track their status.
+                </p>
+
+                <a href="#addComplaint" class="hero-btn">
+                    Submit Complaint
+                </a>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= STATISTICS ================= -->
+
+        <section class="stats">
+
+            <div class="stat-card">
+                <h3 id="totalComplaints">0</h3>
+                <p>Total Complaints</p>
+            </div>
+
+            <div class="stat-card">
+                <h3 id="pendingComplaints">0</h3>
+                <p>Pending</p>
+            </div>
+
+            <div class="stat-card">
+                <h3 id="progressComplaints">0</h3>
+                <p>In Progress</p>
+            </div>
+
+            <div class="stat-card">
+                <h3 id="resolvedComplaints">0</h3>
+                <p>Resolved</p>
+            </div>
+
+        </section>
+
+
+        <!-- ================= MESSAGE ================= -->
+
+        <div id="message" class="message"></div>
+
+
+        <!-- ================= ADD COMPLAINT ================= -->
+
+        <section id="addComplaint" class="section">
+
+            <div class="section-title">
+                <h2>Submit a Complaint</h2>
+
+                <p>
+                    Fill in the details below to report your issue.
+                </p>
+            </div>
+
+
+            <form id="complaintForm" class="complaint-form">
+
+                <input type="hidden" id="complaintId">
+
+
+                <!-- Resident Name -->
+
+                <div class="form-group">
+
+                    <label for="residentName">
+                        Resident Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="residentName"
+                        placeholder="Enter your name"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- Room Number -->
+
+                <div class="form-group">
+
+                    <label for="roomNumber">
+                        Room / Flat Number
+                    </label>
+
+                    <input
+                        type="text"
+                        id="roomNumber"
+                        placeholder="Example: A-203"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- Contact -->
+
+                <div class="form-group">
+
+                    <label for="contact">
+                        Contact Number
+                    </label>
+
+                    <input
+                        type="tel"
+                        id="contact"
+                        placeholder="Enter 10 digit mobile number"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- Category -->
+
+                <div class="form-group">
+
+                    <label for="category">
+                        Complaint Category
+                    </label>
+
+                    <select id="category" required>
+
+                        <option value="">
+                            Select Category
+                        </option>
+
+                        <option value="Electricity">
+                            Electricity
+                        </option>
+
+                        <option value="Plumbing">
+                            Plumbing
+                        </option>
+
+                        <option value="Water">
+                            Water Supply
+                        </option>
+
+                        <option value="Internet">
+                            Internet
+                        </option>
+
+                        <option value="Housekeeping">
+                            Housekeeping
+                        </option>
+
+                        <option value="Maintenance">
+                            Maintenance
+                        </option>
+
+                        <option value="Other">
+                            Other
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- Priority -->
+
+                <div class="form-group">
+
+                    <label for="priority">
+                        Priority
+                    </label>
+
+                    <select id="priority" required>
+
+                        <option value="">
+                            Select Priority
+                        </option>
+
+                        <option value="Low">
+                            Low
+                        </option>
+
+                        <option value="Medium">
+                            Medium
+                        </option>
+
+                        <option value="High">
+                            High
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- Description -->
+
+                <div class="form-group full-width">
+
+                    <label for="description">
+                        Complaint Description
+                    </label>
+
+                    <textarea
+                        id="description"
+                        rows="5"
+                        placeholder="Describe your problem..."
+                        required
+                    ></textarea>
+
+                </div>
+
+
+                <!-- Buttons -->
+
+                <div class="form-buttons">
+
+                    <button
+                        type="submit"
+                        class="btn primary"
+                        id="submitBtn"
+                    >
+                        Submit Complaint
+                    </button>
+
+                    <button
+                        type="button"
+                        class="btn secondary"
+                        id="cancelEditBtn"
+                        onclick="resetForm()"
+                        style="display:none;"
+                    >
+                        Cancel Edit
+                    </button>
+
+                </div>
+
+            </form>
+
+        </section>
+
+
+        <!-- ================= COMPLAINT LIST ================= -->
+
+        <section id="complaints" class="section">
+
+            <div class="section-title">
+
+                <h2>Complaints</h2>
+
+                <p>
+                    View and manage submitted complaints.
+                </p>
+
+            </div>
+
+
+            <!-- SEARCH AND FILTER -->
+
+            <div class="filters">
+
+                <input
+                    type="text"
+                    id="searchInput"
+                    placeholder="🔍 Search complaints..."
+                >
+
+
+                <select id="categoryFilter">
+
+                    <option value="">
+                        All Categories
+                    </option>
+
+                    <option value="Electricity">
+                        Electricity
+                    </option>
+
+                    <option value="Plumbing">
+                        Plumbing
+                    </option>
+
+                    <option value="Water">
+                        Water
+                    </option>
+
+                    <option value="Internet">
+                        Internet
+                    </option>
+
+                    <option value="Housekeeping">
+                        Housekeeping
+                    </option>
+
+                    <option value="Maintenance">
+                        Maintenance
+                    </option>
+
+                    <option value="Other">
+                        Other
+                    </option>
+
+                </select>
+
+
+                <select id="priorityFilter">
+
+                    <option value="">
+                        All Priorities
+                    </option>
+
+                    <option value="Low">
+                        Low
+                    </option>
+
+                    <option value="Medium">
+                        Medium
+                    </option>
+
+                    <option value="High">
+                        High
+                    </option>
+
+                </select>
+
+
+                <select id="statusFilter">
+
+                    <option value="">
+                        All Status
+                    </option>
+
+                    <option value="Pending">
+                        Pending
+                    </option>
+
+                    <option value="In Progress">
+                        In Progress
+                    </option>
+
+                    <option value="Resolved">
+                        Resolved
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- COMPLAINT CARDS -->
+
+            <div id="complaintsContainer" class="complaints-container">
+
+                <!-- JavaScript will add complaints here -->
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer>
+
+        <p>
+            © 2026 PG Care | Complaint Management System
+        </p>
+
+    </footer>
+
+
+    <!-- ================= JAVASCRIPT ================= -->
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
